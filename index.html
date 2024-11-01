@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>CORS Test</h1>
+    <button id="test-cors">TEKAN SAYA</button>
+    <p>
+        1.Pastikan http://localhost:3000 nya sudah kamu aktifkan,
+        <br>
+        2.Setelah menekan Button segera cek console ya.
+    </p>
+    <script>
+        document.getElementById('test-cors').addEventListener('click', () => {
+
+            fetch('http://localhost:3000/api/v1/author', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name: 'M Riki', bio: 'aku adalah penulis cerpen'}), 
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Data telah berhasil dimasukkan. Silakan periksa "autors" di tab network.');
+                console.log('Response Data:', data);
+            })
+            .catch(error => console.error('There was a problem with the fetch operation:', error));
+
+           
+            fetch('http://localhost:3000/api/v1/authors') 
+               .then(response => {
+                    if (!response.ok) {
+                         throw new Error('Network response was not ok');
+                     }
+                     return response.json();
+               })
+               .then(data => {
+                console.log('Ini semua data yang ada di author ya:');
+                console.log('Response Data:', data);
+               })
+            .catch(error => console.error('There was a problem with the fetch operation:', error));
+            
+        });
+    </script>
+</body>
+</html>
